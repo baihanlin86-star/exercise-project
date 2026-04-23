@@ -3,160 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 健身教練專題計畫書</title>
+    <title>AI 驅動個人化健身教練系統 - 專題展示</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* 全域設定 */
-        html { scroll-behavior: smooth; } /* 讓跳轉變平滑 */
-        body { 
-            margin: 0; 
-            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; 
-            display: flex; 
-            background-color: #f8f9fa;
-            color: #333;
+        :root {
+            --sidebar-bg: #111111; /* 極深色側邊欄 */
+            --main-bg: #ffffff;
+            --st-red: #ff4b4b; /* Streamlit 紅 */
+            --st-gray: #31333F;
+            --text-on-dark: #ffffff;
+            --sidebar-width: 260px;
         }
 
-        /* 左側側邊欄 - 模仿範例的簡潔感 */
+        body { 
+            margin: 0; 
+            font-family: "Source Sans Pro", sans-serif; 
+            display: flex; 
+            height: 100vh; 
+            background-color: var(--main-bg); 
+            color: var(--st-gray);
+        }
+
+        /* ⬛ 左側導覽列 (完全還原深色風格) */
         .sidebar {
-            width: 240px;
-            height: 100vh;
-            background-color: #ffffff;
-            position: fixed;
-            border-right: 1px solid #dee2e6;
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
-            padding: 20px 0;
-            z-index: 1000;
+            color: var(--text-on-dark);
+            border-right: 1px solid #333;
+            position: fixed;
+            height: 100%;
         }
-        .sidebar-header {
-            padding: 0 25px 20px 25px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #000;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 20px;
-        }
-        .nav-link {
-            padding: 12px 25px;
-            text-decoration: none;
-            color: #495057;
-            font-size: 1rem;
-            transition: 0.3s;
+
+        .logo-section { margin-bottom: 40px; text-align: left; }
+        .logo-text { font-size: 1.1rem; font-weight: 700; color: #00c6ff; }
+        .logo-sub { font-size: 0.8rem; color: #aaa; margin-top: 5px; }
+
+        .nav-link { 
+            padding: 12px 15px; 
+            text-decoration: none; 
+            color: #ddd; 
+            border-radius: 8px; 
+            margin: 4px 0; 
+            transition: 0.2s; 
             display: flex;
             align-items: center;
         }
-        .nav-link:hover {
-            background-color: #f1f3f5;
-            color: #007bff;
-        }
-        .nav-link.launch {
-            color: #dc3545;
-            font-weight: bold;
-            margin-top: auto; /* 放到最下面 */
-            border-top: 1px solid #eee;
-        }
+        .nav-link:hover { background-color: rgba(255,255,255,0.1); color: white; }
+        .nav-link.active { background-color: rgba(0, 198, 255, 0.15); color: #00c6ff; font-weight: 600; }
+        .nav-icon { margin-right: 10px; font-size: 1.1rem; }
 
-        /* 右側主要內容區 */
-        .content {
-            margin-left: 240px;
+        /* ⬜ 主要內容區 */
+        .main {
+            margin-left: var(--sidebar-width);
             flex: 1;
-            padding: 40px 60px;
-        }
-        section {
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-            min-height: 400px; /* 確保內容夠長可以跳轉 */
-        }
-        h2 {
-            font-size: 1.8rem;
-            border-left: 5px solid #007bff;
-            padding-left: 15px;
-            margin-bottom: 25px;
-            color: #212529;
-        }
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        .info-table td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-        .info-table td:first-child {
-            width: 120px;
-            font-weight: bold;
-            color: #666;
+            padding: 50px 60px;
+            overflow-y: auto;
         }
 
-        /* 大按鈕設定 */
-        .btn-main {
-            display: inline-block;
-            background: #dc3545;
+        /* 🔵 頂部 Hero 卡片 (還原藍色漸層與光暈) */
+        .hero-card {
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            padding: 50px;
+            border-radius: 20px;
             color: white;
-            padding: 15px 35px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.3);
+            position: relative;
         }
+        .hero-emoji { font-size: 3rem; margin-bottom: 15px; display: block; }
+        .hero-card h1 { font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .hero-card p { font-size: 1rem; opacity: 0.9; margin: 5px 0; }
+
+        /* 🔴 啟動按鈕 (經典紅色) */
+        .btn-launch {
+            display: inline-block;
+            background-color: var(--st-red);
+            color: white;
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 25px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 75, 75, 0.4);
+        }
+        .btn-launch:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 75, 75, 0.6); }
+
+        /* 📄 內容卡片樣式 */
+        .content-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #e6e9ef;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        .st-header { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .st-header h3 { margin: 0; font-size: 1.4rem; color: #31333F; }
+        .header-emoji { margin-right: 10px; font-size: 1.5rem; }
+
+        /* 📅 里程碑進度條樣式 */
+        .milestone-box {
+            border-left: 3px solid #00c6ff;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .milestone-date { color: #0072ff; font-weight: 600; font-size: 0.95rem; }
+        .milestone-title { font-weight: 700; color: #31333F; margin: 5px 0; }
+        .milestone-detail { color: #666; font-size: 0.9rem; }
+
+        /* ⬇️ 頁尾 */
+        .footer { text-align: center; color: #888; margin-top: 50px; padding-bottom: 30px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-header">專題控制台</div>
-        <a href="#summary" class="nav-link">🏠 專案摘要</a>
-        <a href="#milestone" class="nav-link">📅 預期進度</a>
-        <a href="#team" class="nav-link">👥 團隊成員</a>
-        <a href="#budget" class="nav-link">💰 經費預算</a>
-        <a href="https://exercise-project-baihanlin.streamlit.app/" class="nav-link launch" target="_blank">🚀 啟動 AI 實體系統</a>
+        <div class="logo-section">
+            <div class="logo-text">CSIE Project 2026</div>
+            <div class="logo-sub">AI健身教練系統</div>
+        </div>
+        <a href="#" class="nav-link active"><span class="nav-icon">🏠</span>專案簡介</a>
+        <a href="#" class="nav-link"><span class="nav-icon">📅</span>開發進度</a>
+        <a href="#" class="nav-link"><span class="nav-icon">👥</span>團隊成員</a>
+        <a href="#" class="nav-link"><span class="nav-icon">💰</span>經費預算</a>
     </div>
 
-    <div class="content">
-        
-        <section id="summary">
-            <h2>🏠 專案摘要</h2>
-            <p>本專題名稱：<b>AI 驅動之個人化健身與物理治療輔助系統</b></p>
-            <p>我們致力於將傳統的健身訓練結合現代 AI 語言模型，透過 RAG（檢索增強生成）技術，將正確的物理治療動作知識與營養建議即時提供給使用者。這不僅是一個健身 App，更是一個懂得預防受傷的智慧導師。</p>
-        </section>
+    <div class="main">
+        <div class="hero-card">
+            <span class="hero-emoji">🏋️</span>
+            <h1>AI 驅動個人化健身教練系統</h1>
+            <p>指導教師：朱學亭 教授</p>
+            <p>團隊成員：林柏翰(組長)、彭治翔、許睿川、蘇彥瑋</p>
+            
+            <a href="https://exercise-project-baihanlin.streamlit.app/" class="btn-launch" target="_blank">🚀 啟動 AI 互動系統</a>
+        </div>
 
-        <section id="milestone">
-            <h2>📅 預期進度</h2>
-            <table class="info-table">
-                <tr><td>115/04</td><td>完成 GitHub Pages 入口網站與 Streamlit 基礎環境部署。</td></tr>
-                <tr><td>115/05</td><td>導入物理治療知識庫，優化 AI 回答的準確性。</td></tr>
-                <tr><td>115/06</td><td>進行系統壓力測試與使用者介面優化。</td></tr>
-            </table>
-        </section>
+        <div class="content-card">
+            <div class="st-header">
+                <span class="header-emoji">🎯</span>
+                <h3>專案摘要</h3>
+            </div>
+            <p>本專題致力於整合 <b>營養學、健身動作分析與物理治療知識</b>。我們透過深度學習模型與知識圖譜技術，為健身新手提供個人化的訓練計畫與精準的動作修正建議，打造全方位的智慧健康助手。</p>
+        </div>
 
-        <section id="team">
-            <h2>👥 團隊成員</h2>
-            <p>指導教授：朱學亭 教授</p>
-            <table class="info-table">
-                <tr><td>組長</td><td>林柏翰 (系統架構、環境維護)</td></tr>
-                <tr><td>成員</td><td>彭治翔 (AI 模型訓練)</td></tr>
-                <tr><td>成員</td><td>許睿川 (物理治療知識收集)</td></tr>
-                <tr><td>成員</td><td>蘇彥瑋 (營養學資料整合)</td></tr>
-            </table>
-        </section>
+        <div class="content-card">
+            <div class="st-header">
+                <span class="header-emoji">📅</span>
+                <h3>專題開發里程碑</h3>
+            </div>
+            
+            <div class="milestone-box">
+                <div class="milestone-date">2026/04 第 4 週</div>
+                <div class="milestone-title">系統介面與 AI 整合</div>
+                <div class="milestone-detail">將後端 AI 模型與 Streamlit 前端介面進行深度整合測試。</div>
+            </div>
 
-        <section id="budget">
-            <h2>💰 經費預算</h2>
-            <p>目前主要支出預計於雲端伺服器託管與 OpenAI API 呼叫額度之申請。詳細內容將隨專題進度持續更新。</p>
-        </section>
+            <div class="milestone-box">
+                <div class="milestone-date">2026/04 第 5 週</div>
+                <div class="milestone-title">GitHub 共同編輯與維護</div>
+                <div class="milestone-detail">完成環境設定與多人協作流程測試，導入 Claude Code 維護機制。</div>
+            </div>
+        </div>
 
-        <section style="text-align: center; border: 2px dashed #dc3545; background: #fff5f5;">
-            <h2>🚀 準備好體驗了嗎？</h2>
-            <p>本頁面為靜態計畫書。要使用 AI 健身教練的即時對話功能，請點擊下方按鈕：</p>
-            <br>
-            <a href="https://exercise-project-baihanlin.streamlit.app/" class="btn-main" target="_blank">進入 Streamlit 實體系統</a>
-            <p style="margin-top: 15px; font-size: 0.8rem; color: #999;">(建議使用電腦瀏覽器以獲得最佳體驗)</p>
-        </section>
-
+        <div class="footer">
+            最後更新日期：115/04/09 | 靜宜大學資訊工程學系 專題計畫書展示
+        </div>
     </div>
 
 </body>
