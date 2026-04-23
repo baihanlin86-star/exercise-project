@@ -1,181 +1,320 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 驅動個人化健身教練系統 - 專題展示</title>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --sidebar-bg: #111111; /* 極深色側邊欄 */
-            --main-bg: #ffffff;
-            --st-red: #ff4b4b; /* Streamlit 紅 */
-            --st-gray: #31333F;
-            --text-on-dark: #ffffff;
-            --sidebar-width: 260px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>專題製作</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body { 
-            margin: 0; 
-            font-family: "Source Sans Pro", sans-serif; 
-            display: flex; 
-            height: 100vh; 
-            background-color: var(--main-bg); 
-            color: var(--st-gray);
-        }
+    body {
+      font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      color: #333;
+      line-height: 1.8;
+      background: #f5f7fa;
+    }
 
-        /* ⬛ 左側導覽列 (完全還原深色風格) */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--sidebar-bg);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            color: var(--text-on-dark);
-            border-right: 1px solid #333;
-            position: fixed;
-            height: 100%;
-        }
+    /* 主視覺 */
+    header {
+      background: linear-gradient(135deg, #1a3a5c, #2a6496);
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    header h1 { font-size: 2.4rem; margin-bottom: 12px; }
+    header p  { font-size: 1.15rem; opacity: .85; }
 
-        .logo-section { margin-bottom: 40px; text-align: left; }
-        .logo-text { font-size: 1.1rem; font-weight: 700; color: #00c6ff; }
-        .logo-sub { font-size: 0.8rem; color: #aaa; margin-top: 5px; }
+    /* Tabs 容器 */
+    .tabs {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-        .nav-link { 
-            padding: 12px 15px; 
-            text-decoration: none; 
-            color: #ddd; 
-            border-radius: 8px; 
-            margin: 4px 0; 
-            transition: 0.2s; 
-            display: flex;
-            align-items: center;
-        }
-        .nav-link:hover { background-color: rgba(255,255,255,0.1); color: white; }
-        .nav-link.active { background-color: rgba(0, 198, 255, 0.15); color: #00c6ff; font-weight: 600; }
-        .nav-icon { margin-right: 10px; font-size: 1.1rem; }
+    /* Tab 按鈕列 */
+    .tab-nav {
+      display: flex;
+      background: #1a3a5c;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+      margin-top: -20px;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.7);
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 16px 12px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      position: relative;
+    }
+    .tab-btn:hover {
+      background: rgba(255,255,255,.1);
+      color: #fff;
+    }
+    .tab-btn.active {
+      background: #fff;
+      color: #1a3a5c;
+      font-weight: bold;
+    }
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background: #2a6496;
+      border-radius: 2px;
+    }
 
-        /* ⬜ 主要內容區 */
-        .main {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 50px 60px;
-            overflow-y: auto;
-        }
+    /* Tab 內容 */
+    .tab-panel {
+      display: none;
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+      padding: 48px 36px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      margin-bottom: 40px;
+      animation: fadeIn .3s ease;
+    }
+    .tab-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-        /* 🔵 頂部 Hero 卡片 (還原藍色漸層與光暈) */
-        .hero-card {
-            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
-            padding: 50px;
-            border-radius: 20px;
-            color: white;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.3);
-            position: relative;
-        }
-        .hero-emoji { font-size: 3rem; margin-bottom: 15px; display: block; }
-        .hero-card h1 { font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
-        .hero-card p { font-size: 1rem; opacity: 0.9; margin: 5px 0; }
+    .tab-panel h2 {
+      font-size: 1.6rem;
+      color: #1a3a5c;
+      border-left: 4px solid #2a6496;
+      padding-left: 12px;
+      margin-bottom: 24px;
+    }
 
-        /* 🔴 啟動按鈕 (經典紅色) */
-        .btn-launch {
-            display: inline-block;
-            background-color: var(--st-red);
-            color: white;
-            padding: 14px 30px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 25px;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 75, 75, 0.4);
-        }
-        .btn-launch:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 75, 75, 0.6); }
+    /* 主題說明 */
+    .topic-content p { margin-bottom: 14px; }
 
-        /* 📄 內容卡片樣式 */
-        .content-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid #e6e9ef;
-            margin-bottom: 25px;
-            line-height: 1.7;
-        }
-        .st-header { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .st-header h3 { margin: 0; font-size: 1.4rem; color: #31333F; }
-        .header-emoji { margin-right: 10px; font-size: 1.5rem; }
+    /* 成員卡片 */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .member-card {
+      background: #f0f4f8;
+      border-radius: 10px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .member-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.1);
+    }
+    .member-card .avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: #2a6496;
+      color: #fff;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .member-card h3 { font-size: 1.1rem; margin-bottom: 4px; }
+    .member-card .role { font-size: .9rem; color: #666; }
 
-        /* 📅 里程碑進度條樣式 */
-        .milestone-box {
-            border-left: 3px solid #00c6ff;
-            padding-left: 20px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        .milestone-date { color: #0072ff; font-weight: 600; font-size: 0.95rem; }
-        .milestone-title { font-weight: 700; color: #31333F; margin: 5px 0; }
-        .milestone-detail { color: #666; font-size: 0.9rem; }
+    /* 進度時間軸 */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px; top: 0; bottom: 0;
+      width: 3px;
+      background: #2a6496;
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 32px;
+    }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -24px; top: 6px;
+      width: 14px; height: 14px;
+      background: #fff;
+      border: 3px solid #2a6496;
+      border-radius: 50%;
+    }
+    .timeline-item.done::before { background: #2a6496; }
+    .timeline-item .date {
+      font-size: .85rem;
+      color: #2a6496;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .timeline-item h3 { font-size: 1.05rem; margin-bottom: 4px; }
+    .timeline-item p  { font-size: .95rem; color: #555; }
 
-        /* ⬇️ 頁尾 */
-        .footer { text-align: center; color: #888; margin-top: 50px; padding-bottom: 30px; font-size: 0.9rem; }
-    </style>
+    /* 參考資料 */
+    .ref-list { list-style: decimal; padding-left: 24px; }
+    .ref-list li {
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+    .ref-list a { color: #2a6496; text-decoration: none; }
+    .ref-list a:hover { text-decoration: underline; }
+
+    /* 頁尾 */
+    footer {
+      text-align: center;
+      padding: 24px;
+      background: #1a3a5c;
+      color: rgba(255,255,255,.7);
+      font-size: .85rem;
+    }
+
+    /* RWD */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8rem; }
+      .tabs { padding: 0 12px; }
+      .tab-nav { flex-wrap: wrap; border-radius: 10px 10px 0 0; }
+      .tab-btn { flex: 1 1 50%; font-size: .9rem; padding: 14px 8px; }
+      .tab-panel { padding: 32px 20px; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="logo-section">
-            <div class="logo-text">CSIE Project 2026</div>
-            <div class="logo-sub">AI健身教練系統</div>
-        </div>
-        <a href="#" class="nav-link active"><span class="nav-icon">🏠</span>專案簡介</a>
-        <a href="#" class="nav-link"><span class="nav-icon">📅</span>開發進度</a>
-        <a href="#" class="nav-link"><span class="nav-icon">👥</span>團隊成員</a>
-        <a href="#" class="nav-link"><span class="nav-icon">💰</span>經費預算</a>
+<!-- 主視覺 -->
+<header>
+  <h1>專題名稱</h1>
+  <p>靜宜大學資訊工程學系 — 114 學年度第 2 學期</p>
+</header>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="topic">主題說明</button>
+    <button class="tab-btn" data-tab="members">計畫成員</button>
+    <button class="tab-btn" data-tab="progress">專題進度</button>
+    <button class="tab-btn" data-tab="references">參考資料</button>
+  </div>
+
+  <!-- 一、主題說明 -->
+  <div class="tab-panel active" id="topic">
+    <h2>主題說明</h2>
+    <div class="topic-content">
+      <p><strong>研究動機：</strong>請在此描述為什麼選擇這個題目，想解決什麼問題。</p>
+      <p><strong>研究目的：</strong>請在此說明專題預期達成的目標與成果。</p>
+      <p><strong>系統架構：</strong>請在此概述系統的整體架構、使用的技術或方法。</p>
+      <p><strong>預期成果：</strong>請在此說明完成後預期呈現的成品或結論。</p>
     </div>
+  </div>
 
-    <div class="main">
-        <div class="hero-card">
-            <span class="hero-emoji">🏋️</span>
-            <h1>AI 驅動個人化健身教練系統</h1>
-            <p>指導教師：朱學亭 教授</p>
-            <p>團隊成員：林柏翰(組長)、彭治翔、許睿川、蘇彥瑋</p>
-            
-            <a href="https://exercise-project-baihanlin.streamlit.app/" class="btn-launch" target="_blank">🚀 啟動 AI 互動系統</a>
-        </div>
-
-        <div class="content-card">
-            <div class="st-header">
-                <span class="header-emoji">🎯</span>
-                <h3>專案摘要</h3>
-            </div>
-            <p>本專題致力於整合 <b>營養學、健身動作分析與物理治療知識</b>。我們透過深度學習模型與知識圖譜技術，為健身新手提供個人化的訓練計畫與精準的動作修正建議，打造全方位的智慧健康助手。</p>
-        </div>
-
-        <div class="content-card">
-            <div class="st-header">
-                <span class="header-emoji">📅</span>
-                <h3>專題開發里程碑</h3>
-            </div>
-            
-            <div class="milestone-box">
-                <div class="milestone-date">2026/04 第 4 週</div>
-                <div class="milestone-title">系統介面與 AI 整合</div>
-                <div class="milestone-detail">將後端 AI 模型與 Streamlit 前端介面進行深度整合測試。</div>
-            </div>
-
-            <div class="milestone-box">
-                <div class="milestone-date">2026/04 第 5 週</div>
-                <div class="milestone-title">GitHub 共同編輯與維護</div>
-                <div class="milestone-detail">完成環境設定與多人協作流程測試，導入 Claude Code 維護機制。</div>
-            </div>
-        </div>
-
-        <div class="footer">
-            最後更新日期：115/04/09 | 靜宜大學資訊工程學系 專題計畫書展示
-        </div>
+  <!-- 二、計畫成員 -->
+  <div class="tab-panel" id="members">
+    <h2>計畫成員</h2>
+    <div class="members-grid">
+      <div class="member-card">
+        <div class="avatar">指</div>
+        <h3>王老師</h3>
+        <p class="role">指導教授</p>
+      </div>
+      <div class="member-card">
+        <div class="avatar">A</div>
+        <h3>學生 A</h3>
+        <p class="role">組長 / 系統設計</p>
+      </div>
+      <div class="member-card">
+        <div class="avatar">B</div>
+        <h3>學生 B</h3>
+        <p class="role">前端開發</p>
+      </div>
+      <div class="member-card">
+        <div class="avatar">C</div>
+        <h3>學生 C</h3>
+        <p class="role">後端開發</p>
+      </div>
+      <div class="member-card">
+        <div class="avatar">D</div>
+        <h3>學生 D</h3>
+        <p class="role">資料分析 / 測試</p>
+      </div>
     </div>
+  </div>
+
+  <!-- 三、專題進度 -->
+  <div class="tab-panel" id="progress">
+    <h2>專題進度</h2>
+    <div class="timeline">
+      <div class="timeline-item done">
+        <div class="date">2026 年 2 月</div>
+        <h3>題目確認與文獻蒐集</h3>
+        <p>確定專題方向，蒐集相關論文與技術資料。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">2026 年 3 月</div>
+        <h3>需求分析與系統規劃</h3>
+        <p>完成需求訪談、功能規格書與系統架構設計。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">2026 年 4 月</div>
+        <h3>雛型開發</h3>
+        <p>完成核心功能原型，進行初步測試。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">2026 年 5 月</div>
+        <h3>系統整合與測試</h3>
+        <p>前後端整合、撰寫測試案例並修正問題。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">2026 年 6 月</div>
+        <h3>報告撰寫與成果展示</h3>
+        <p>撰寫專題報告，準備口頭報告與展示。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 四、參考資料 -->
+  <div class="tab-panel" id="references">
+    <h2>參考資料</h2>
+    <ol class="ref-list">
+      <li>作者（年份）。論文名稱。<em>期刊名稱</em>，卷(期)，頁碼。</li>
+      <li>作者（年份）。書名。出版社。</li>
+      <li>網站名稱。<a href="https://example.com" target="_blank">https://example.com</a>（存取日期：2026 年 2 月）。</li>
+      <li>請依照指導教授要求的引用格式，持續新增參考文獻。</li>
+    </ol>
+  </div>
+</div>
+
+<!-- 頁尾 -->
+<footer>
+  &copy; 靜宜大學資訊工程學系 — 114 學年度第 2 學期 專題製作
+</footer>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
 
 </body>
 </html>
