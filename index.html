@@ -3,145 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 健身教練系統展示</title>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>AI 健身教練專題計畫書</title>
     <style>
-        :root {
-            --sidebar-width: 280px;
-            --st-red: #ff4b4b;
-            --st-gray: #f0f2f6;
-            --st-text: #31333F;
-        }
-
+        /* 全域設定 */
+        html { scroll-behavior: smooth; } /* 讓跳轉變平滑 */
         body { 
             margin: 0; 
-            font-family: 'Source Sans Pro', sans-serif; 
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; 
             display: flex; 
-            height: 100vh; 
-            background-color: #ffffff;
-            color: var(--st-text);
+            background-color: #f8f9fa;
+            color: #333;
         }
 
-        /* 側邊欄 Sidebar */
+        /* 左側側邊欄 - 模仿範例的簡潔感 */
         .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--st-gray);
-            padding: 40px 20px;
+            width: 240px;
+            height: 100vh;
+            background-color: #ffffff;
+            position: fixed;
+            border-right: 1px solid #dee2e6;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #e6e9ef;
-            position: fixed;
-            height: 100%;
+            padding: 20px 0;
+            z-index: 1000;
         }
-
-        .sidebar-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 30px; color: #555; }
-        .nav-link { padding: 10px; text-decoration: none; color: var(--st-text); border-radius: 5px; margin: 5px 0; transition: 0.2s; }
-        .nav-link:hover { background-color: #e6e9ef; }
-        .nav-link.active { background-color: #ffffff; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-
-        /* 主要內容區 Main Content */
-        .main {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 60px 80px;
-            overflow-y: auto;
+        .sidebar-header {
+            padding: 0 25px 20px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #000;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
         }
-
-        .st-header { border-bottom: 2px solid var(--st-red); padding-bottom: 10px; margin-bottom: 40px; }
-        .st-header h1 { font-size: 2.8rem; margin: 0; }
-
-        .st-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid #e6e9ef;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .st-card h2 { margin-top: 0; color: #31333F; font-size: 1.5rem; }
-
-        /* 最後一頁的連結按鈕區 */
-        .cta-section {
-            background-color: #f8f9fb;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            border: 2px dashed #ff4b4b;
-            margin-top: 60px;
-        }
-
-        .btn-launch {
-            display: inline-block;
-            background-color: var(--st-red);
-            color: white;
-            padding: 15px 40px;
+        .nav-link {
+            padding: 12px 25px;
             text-decoration: none;
-            border-radius: 10px;
+            color: #495057;
+            font-size: 1rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .nav-link:hover {
+            background-color: #f1f3f5;
+            color: #007bff;
+        }
+        .nav-link.launch {
+            color: #dc3545;
+            font-weight: bold;
+            margin-top: auto; /* 放到最下面 */
+            border-top: 1px solid #eee;
+        }
+
+        /* 右側主要內容區 */
+        .content {
+            margin-left: 240px;
+            flex: 1;
+            padding: 40px 60px;
+        }
+        section {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            min-height: 400px; /* 確保內容夠長可以跳轉 */
+        }
+        h2 {
+            font-size: 1.8rem;
+            border-left: 5px solid #007bff;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            color: #212529;
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .info-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .info-table td:first-child {
+            width: 120px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        /* 大按鈕設定 */
+        .btn-main {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 5px;
             font-weight: bold;
             font-size: 1.2rem;
-            margin-top: 20px;
-            box-shadow: 0 4px 14px 0 rgba(255, 75, 75, 0.39);
-            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
         }
-
-        .btn-launch:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 75, 75, 0.5); }
-
-        .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
-        .team-member { background: #fff; padding: 10px; border-radius: 5px; border-left: 4px solid var(--st-red); }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-title">專題控制台</div>
-        <a href="#intro" class="nav-link active">🏠 專案簡介</a>
-        <a href="#milestone" class="nav-link">📅 開發進度</a>
+        <div class="sidebar-header">專題控制台</div>
+        <a href="#summary" class="nav-link">🏠 專案摘要</a>
+        <a href="#milestone" class="nav-link">📅 預期進度</a>
         <a href="#team" class="nav-link">👥 團隊成員</a>
-        <a href="https://exercise-project-baihanlin.streamlit.app/" class="nav-link" style="color: var(--st-red); font-weight: bold; margin-top: 20px;">🚀 啟動實體系統</a>
-        
-        <div style="margin-top: auto; font-size: 0.8rem; color: #999;">
-            Powered by GitHub Pages<br>Ver. 1.0.409
-        </div>
+        <a href="#budget" class="nav-link">💰 經費預算</a>
+        <a href="https://exercise-project-baihanlin.streamlit.app/" class="nav-link launch" target="_blank">🚀 啟動 AI 實體系統</a>
     </div>
 
-    <div class="main">
-        <div class="st-header" id="intro">
-            <h1>🏋️ AI 驅動的個人化健身教練系統</h1>
-            <p>靜宜大學資訊工程學系 專題計畫書展示</p>
-        </div>
+    <div class="content">
+        
+        <section id="summary">
+            <h2>🏠 專案摘要</h2>
+            <p>本專題名稱：<b>AI 驅動之個人化健身與物理治療輔助系統</b></p>
+            <p>我們致力於將傳統的健身訓練結合現代 AI 語言模型，透過 RAG（檢索增強生成）技術，將正確的物理治療動作知識與營養建議即時提供給使用者。這不僅是一個健身 App，更是一個懂得預防受傷的智慧導師。</p>
+        </section>
 
-        <div class="st-card">
-            <h2>🎯 專案摘要</h2>
-            <p>本系統旨在解決健身新手在動作標準度、營養攝取與受傷復健之間的知識斷層。我們整合了最新的 <b>Large Language Models (LLM)</b> 與 <b>物治知識圖譜</b>，提供 24 小時在線的虛擬教練服務。</p>
-        </div>
+        <section id="milestone">
+            <h2>📅 預期進度</h2>
+            <table class="info-table">
+                <tr><td>115/04</td><td>完成 GitHub Pages 入口網站與 Streamlit 基礎環境部署。</td></tr>
+                <tr><td>115/05</td><td>導入物理治療知識庫，優化 AI 回答的準確性。</td></tr>
+                <tr><td>115/06</td><td>進行系統壓力測試與使用者介面優化。</td></tr>
+            </table>
+        </section>
 
-        <div class="st-card" id="milestone">
-            <h2>📅 開發里程碑</h2>
-            <p><b>Q2 2026 (目前階段)：</b><br>
-            • 建立混合式架構 (GitHub Pages + Streamlit)<br>
-            • 使用 Claude Code 進行自動化維護<br>
-            • 整合物治運動科學建議模型</p>
-        </div>
+        <section id="team">
+            <h2>👥 團隊成員</h2>
+            <p>指導教授：朱學亭 教授</p>
+            <table class="info-table">
+                <tr><td>組長</td><td>林柏翰 (系統架構、環境維護)</td></tr>
+                <tr><td>成員</td><td>彭治翔 (AI 模型訓練)</td></tr>
+                <tr><td>成員</td><td>許睿川 (物理治療知識收集)</td></tr>
+                <tr><td>成員</td><td>蘇彥瑋 (營養學資料整合)</td></tr>
+            </table>
+        </section>
 
-        <div class="st-card" id="team">
-            <h2>👥 團隊資訊</h2>
-            <div class="team-grid">
-                <div class="team-member"><b>林柏翰</b> (組長) - 系統架構、Claude Code 維護</div>
-                <div class="team-member"><b>彭治翔</b> - AI 健身模型訓練</div>
-                <div class="team-member"><b>許睿川</b> - 物理治療知識庫</div>
-                <div class="team-member"><b>蘇彥瑋</b> - 營養學資料處理</div>
-            </div>
-        </div>
+        <section id="budget">
+            <h2>💰 經費預算</h2>
+            <p>目前主要支出預計於雲端伺服器託管與 OpenAI API 呼叫額度之申請。詳細內容將隨專題進度持續更新。</p>
+        </section>
 
-        <div class="cta-section">
-            <h2>⚡ 準備好體驗實體系統了嗎？</h2>
-            <p>以上為靜態展示，核心 AI 運算與即時互動功能請前往我們的實體部署環境：</p>
-            <a href="https://exercise-project-baihanlin.streamlit.app/" class="btn-launch" target="_blank">🚀 點此開啟 Streamlit 互動 App</a>
-            <p style="margin-top: 20px; font-size: 0.9rem; color: #666;">(註：系統可能需要 30 秒啟動伺服器)</p>
-        </div>
+        <section style="text-align: center; border: 2px dashed #dc3545; background: #fff5f5;">
+            <h2>🚀 準備好體驗了嗎？</h2>
+            <p>本頁面為靜態計畫書。要使用 AI 健身教練的即時對話功能，請點擊下方按鈕：</p>
+            <br>
+            <a href="https://exercise-project-baihanlin.streamlit.app/" class="btn-main" target="_blank">進入 Streamlit 實體系統</a>
+            <p style="margin-top: 15px; font-size: 0.8rem; color: #999;">(建議使用電腦瀏覽器以獲得最佳體驗)</p>
+        </section>
 
-        <div style="height: 100px;"></div> </div>
+    </div>
 
 </body>
 </html>
