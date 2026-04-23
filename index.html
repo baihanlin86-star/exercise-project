@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI健身教練專題展示</title>
+    <style>
+        /* 移植自你原本的 Streamlit CSS */
+        body { 
+            background-color: #f4f7f9; 
+            font-family: "Source Sans Pro", sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            padding: 60px 20px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .content-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            border-top: 5px solid #00c6ff;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .progress-box {
+            border-left: 3px solid #00c6ff;
+            padding-left: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .btn-launch {
+            display: inline-block;
+            background: #00c6ff;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn-launch:hover {
+            background: #0072ff;
+            transform: translateY(-2px);
+        }
+        h2 { color: #2c5364; }
+        .footer { text-align: center; color: #888; margin-top: 40px; padding-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="hero-section">
+            <h1 style="font-size: 42px; margin: 0 0 10px 0;">AI驅動的個人化健身教練</h1>
+            <p style="font-size: 18px; opacity: 0.9;">指導教師：朱學亭 教授 | 專題小組：林柏翰、彭治翔、許睿川、蘇彥瑋</p>
+            
+            <a href="https://exercise-project-baihanlin.streamlit.app/" class="btn-launch" target="_blank">🚀 啟動 AI 互動系統</a>
+        </div>
+
+        <div class="content-card">
+            <h2>🎯 專題摘要</h2>
+            <p>本專題結合 <b>營養、健身動作、物治知識</b>，為健身新手建立全方位 AI 助手。透過深度學習模型與知識圖譜，提供個人化的訓練與復健建議。</p>
+        </div>
+
+        <div class="content-card">
+            <h2>📅 專題開發里程碑</h2>
+            <div class="progress-box">
+                <b style="color: #00c6ff;">2026/04 第 4 週</b><br>
+                <b>系統介面與 AI 整合</b><br>
+                <small style="color: #666;">將後端 AI 模型與 Streamlit 前端介面進行深度整合測試。</small>
+            </div>
+            <div class="progress-box">
+                <b style="color: #00c6ff;">2026/04 第 5 週</b><br>
+                <b>GitHub 共同編輯與維護</b><br>
+                <small style="color: #666;">完成環境設定與多人協作流程測試，導入 Claude Code 維護機制。</small>
+            </div>
+        </div>
+
+        <div class="footer">
+            最後更新日期：115/04/09 | 靜宜大學資訊工程學系 專題計畫書展示
+        </div>
+    </div>
+</body>
+</html>
