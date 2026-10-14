@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI健身教練專題進度報告</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      color: #333;
+      line-height: 1.8;
+      background: #f4f7f9;
+    }
+
+    /* --- 頂部 Header --- */
+    header {
+      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px 80px;
+    }
+    header h1 { font-size: 2.6rem; margin-bottom: 12px; }
+    header p { font-size: 1.15rem; opacity: .9; }
+
+    /* --- 關鍵數據摘要 (Metrics) --- */
+    .metrics-container {
+      max-width: 1000px;
+      margin: -40px auto 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 20;
+    }
+    .metric-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      border-top: 4px solid #ff4b4b;
+    }
+    .metric-label { font-size: 0.9rem; color: #666; }
+    .metric-value { font-size: 1.3rem; font-weight: bold; color: #1a3a5c; margin: 5px 0; }
+    .metric-delta { font-size: 0.85rem; color: #ff4b4b; font-weight: bold; }
+
+    /* --- Tabs 導覽列 --- */
+    .tabs { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+    .tab-nav {
+      display: flex;
+      background: #1a3a5c;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+    }
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.7);
+      font-family: inherit;
+      padding: 18px 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab-btn.active { background: #fff; color: #1a3a5c; font-weight: bold; }
+
+    /* --- 內容面板 --- */
+    .tab-panel {
+      display: none;
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+      padding: 40px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      margin-bottom: 40px;
+    }
+    .tab-panel.active { display: block; }
+
+    h2 {
+      font-size: 1.6rem;
+      color: #1a3a5c;
+      border-left: 5px solid #ff4b4b;
+      padding-left: 15px;
+      margin-bottom: 25px;
+    }
+
+    /* --- 進度時間軸 --- */
+    .progress-box {
+      border-left: 3px solid #ff4b4b;
+      padding: 0 0 25px 20px;
+      position: relative;
+    }
+    .progress-box::before {
+      content: "";
+      position: absolute;
+      left: -8px; top: 0;
+      width: 13px; height: 13px;
+      background: #ff4b4b;
+      border-radius: 50%;
+    }
+    .week-label { color: #ff4b4b; font-weight: bold; }
+    .week-title { font-weight: bold; display: block; margin: 2px 0; }
+    .week-detail { color: #666; font-size: 0.95rem; }
+
+    /* --- 團隊資訊 --- */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .member-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #1a3a5c;
+      color: rgba(255,255,255,.6);
+      font-size: .9rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>視覺感測驅動：AI健身動作分析與處方系統</h1>
+  <p>靜宜資工 專題進度報告 | 指導教師：朱學亭 教授</p>
+</header>
+
+<div class="metrics-container">
+  <div class="metric-card">
+    <div class="metric-label">偵測核心</div>
+    <div class="metric-value">MediaPipe Pose</div>
+    <div class="metric-delta">33 個骨架關鍵點</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">辨識邏輯</div>
+    <div class="metric-value">動作代償偵測</div>
+    <div class="metric-delta">如：肱骨前移、圓肩</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">科學化訓練引導</div>
+    <div class="metric-value">動作優化指引</div>
+    <div class="metric-delta">即時觸發拉伸處方</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">整合開發</div>
+    <div class="metric-value">CV + Python</div>
+    <div class="metric-delta">視覺感知專家系統</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="topic">🎯 核心摘要</button>
+    <button class="tab-btn" data-tab="progress">📅 進度規劃</button>
+    <button class="tab-btn" data-tab="members">👥 團隊分工</button>
+  </div>
+
+  <div class="tab-panel active" id="topic">
+    <h2>🎯 專案核心摘要</h2>
+    <p>本專題由「通用對話」轉向具體的「電腦視覺 (CV) 動作感測系統」。透過手機鏡頭偵測人體 33 個骨架點，解決健身新手動作不規範的問題：</p>
+    <ul style="margin-top: 15px; padding-left: 20px;">
+      <li><strong>即時動作監測：</strong>以 OpenCV 與 MediaPipe 辨識重訓動作（如臥推、肩推），監控關節角度與力線位移。</li>
+      <li><strong>生物力學偏移分析：</strong>偵測特定姿勢偏移模式（如：肩部前移、圓肩 ），並立即提供科學化運動引導與動態放鬆建議。</li>
+      <li><strong>動態營養補給：</strong>根據感測到的訓練總量與疲勞程度，提供數據驅動的蛋白質與碳水補給對策。</li>
+    </ul>
+    <p style="margin-top: 15px; color: #666;">目標是打造具備「專家眼睛」的智慧助教，讓訓練更具科學性與安全性。</p>
+  </div>
+
+  <div class="tab-panel" id="progress">
+    <h2>📅 專題開發里程碑</h2>
+    <div class="progress-box">
+      <span class="week-label">2026/04/09</span>
+      <span class="week-title">製作專題網站進度報告網頁</span>
+      <span class="week-detail">製作可觀賞的報告網頁。</span>
+    </div>
+    <div class="progress-box">
+      <span class="week-label">2026/04/23</span>
+      <span class="week-title">視覺偵測原型設計</span>
+      <span class="week-detail">整合 MediaPipe Pose 追蹤，完成人體 33 個關鍵點座標抓取。</span>
+    </div>
+    <div class="progress-box">
+      <span class="week-label">2026/05/07</span>
+      <span class="week-title">導入 Claude AI 協作開發，維運專題網站與核心程式碼</span>
+      <span class="week-detail">本週導入 Claude Code 作為 AI 協作開發夥伴，協同維護專題進度報告網站並進行核心程式碼之迭代與優化。透過自然語言驅動的開發流程，加速網頁內容更新、cam.py 程式碼維護與環境建置除錯，建立人機協作的高效率專題開發模式，顯著提升整體開發效率與程式碼品質。</span>
+    </div>
+    <div class="progress-box" style="border:none;">
+      <span class="week-label"></span>
+      <span class="week-title"></span>
+      <span class="week-detail">。</span>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="members">
+    <h2>👥 團隊分工</h2>
+    <div class="members-grid">
+      <div class="member-card"><b>林柏翰</b><br><small>CV 邏輯與系統架構</small></div>
+      <div class="member-card"><b>彭治翔</b><br><small>CV 網頁設計</small></div>
+      <div class="member-card"><b>許睿川</b><br><small>CV 網頁設計</small></div>
+      <div class="member-card"><b>蘇彥瑋</b><br><small>CV 網頁設計</small></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  最後更新日期：115/05/07 | 靜宜大學資訊工程學系 專題進度報告
+</footer>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
